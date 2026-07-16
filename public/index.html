@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestao de Despesas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Gestao de Despesas</h1>
+      <p>Controle suas contas de casa</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="dashboard" class="dashboard">
+      <div class="card card-total">
+        <h3>Total</h3>
+        <p id="totalGeral">R$ 0,00</p>
+      </div>
+      <div class="card card-pago">
+        <h3>Pago</h3>
+        <p id="totalPago">R$ 0,00</p>
+      </div>
+      <div class="card card-pendente">
+        <h3>Pendente</h3>
+        <p id="totalPendente">R$ 0,00</p>
+      </div>
+      <div class="card card-atrasado">
+        <h3>Atrasado</h3>
+        <p id="totalAtrasado">R$ 0,00</p>
+      </div>
+    </section>
+
+    <section class="controls">
+      <div class="filters">
+        <input type="text" id="busca" placeholder="Buscar despesa...">
+        <select id="filtroCategoria">
+          <option value="">Todas as categorias</option>
+        </select>
+        <select id="filtroStatus">
+          <option value="">Todos os status</option>
+        </select>
+        <select id="filtroMes">
+          <option value="">Todos os meses</option>
+          <option value="1">Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Marco</option>
+          <option value="4">Abril</option>
+          <option value="5">Maio</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+        <input type="number" id="filtroAno" placeholder="Ano" min="2020" max="2030">
+      </div>
+      <button id="btnNovaDespesa" class="btn-primary">+ Nova Despesa</button>
+    </section>
+
+    <section class="tabela-container">
+      <table id="tabelaDespesas">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+            <th>Pagamento</th>
+            <th>Status</th>
+            <th>Acoes</th>
+          </tr>
+        </thead>
+        <tbody id="corpoTabela">
+        </tbody>
+      </table>
+      <p id="msgVazio" class="msg-vazio" style="display:none;">Nenhuma despesa encontrada.</p>
+    </section>
+
+    <section id="resumoMensal" class="resumo-mensal">
+      <h2>Resumo Mensal</h2>
+      <div id="listaResumoMensal" class="lista-resumo"></div>
+    </section>
+
+    <section id="resumoCategoria" class="resumo-categoria">
+      <h2>Por Categoria</h2>
+      <div id="listaResumoCategoria" class="lista-resumo"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitulo">Nova Despesa</h2>
+        <button class="btn-close" id="btnFecharModal">&times;</button>
+      </div>
+      <form id="formDespesa">
+        <input type="hidden" id="editId">
+
+        <div class="form-group">
+          <label for="nome">Nome *</label>
+          <input type="text" id="nome" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="categoria">Categoria *</label>
+            <select id="categoria" required></select>
+          </div>
+          <div class="form-group">
+            <label for="valor">Valor (R$) *</label>
+            <input type="number" id="valor" step="0.01" min="0" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dataVencimento">Data Vencimento *</label>
+            <input type="date" id="dataVencimento" required>
+          </div>
+          <div class="form-group">
+            <label for="dataPagamento">Data Pagamento</label>
+            <input type="date" id="dataPagamento">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status"></select>
+          </div>
+          <div class="form-group">
+            <label for="recorrente">
+              <input type="checkbox" id="recorrente"> Recorrente
+            </label>
+            <select id="frequencia" style="margin-top:8px;">
+              <option value="">Frequencia</option>
+              <option value="Mensal">Mensal</option>
+              <option value="Quinzenal">Quinzenal</option>
+              <option value="Semanal">Semanal</option>
+              <option value="Anual">Anual</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="descricao">Descricao</label>
+          <textarea id="descricao" rows="3"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="btnCancelar">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalConfirmacao" class="modal" style="display:none;">
+    <div class="modal-content modal-pequeno">
+      <h2>Confirmar exclusao</h2>
+      <p>Tem certeza que deseja excluir esta despesa?</p>
+      <div class="form-actions">
+        <button class="btn-secondary" id="btnCancelarExclusao">Cancelar</button>
+        <button class="btn-danger" id="btnConfirmarExclusao">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

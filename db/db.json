@@ -1,0 +1,85 @@
+{
+  "despesas": [
+    {
+      "id": "267e163b-b55f-443d-acc9-c337ce03bea2",
+      "nome": "Conta de Agua",
+      "categoria": "Agua",
+      "valor": 85.5,
+      "dataVencimento": "2026-07-20",
+      "dataPagamento": null,
+      "status": "Pendente",
+      "descricao": "Conta mensal de agua",
+      "recorrente": false,
+      "frequencia": null,
+      "criadoEm": "2026-07-15T23:37:19.641Z",
+      "atualizadoEm": "2026-07-15T23:37:19.641Z"
+    },
+    {
+      "id": "7efec5c9-ef3c-437e-a470-6cc2a762fa9d",
+      "nome": "Conta de Luz",
+      "categoria": "Luz",
+      "valor": 210,
+      "dataVencimento": "2026-07-25",
+      "dataPagamento": null,
+      "status": "Pendente",
+      "descricao": "Energia eletrica",
+      "recorrente": false,
+      "frequencia": null,
+      "criadoEm": "2026-07-15T23:37:25.939Z",
+      "atualizadoEm": "2026-07-15T23:37:25.939Z"
+    },
+    {
+      "id": "4de2346c-326a-4917-ac1a-502adaa9eca5",
+      "nome": "Internet Fibra",
+      "categoria": "Internet",
+      "valor": 129.9,
+      "dataVencimento": "2026-07-15",
+      "dataPagamento": "2026-07-14",
+      "status": "Pago",
+      "descricao": "Plano 500mb",
+      "recorrente": false,
+      "frequencia": null,
+      "criadoEm": "2026-07-15T23:37:26.029Z",
+      "atualizadoEm": "2026-07-15T23:37:26.029Z"
+    },
+    {
+      "id": "a8c88c54-30c0-4ba3-a247-38473f4cc737",
+      "nome": "Cartao Nubank",
+      "categoria": "Cartao de Credito",
+      "valor": 1580,
+      "dataVencimento": "2026-07-10",
+      "dataPagamento": "2026-07-16",
+      "status": "Pago",
+      "descricao": "Fatura do mes",
+      "recorrente": false,
+      "frequencia": null,
+      "criadoEm": "2026-07-15T23:37:26.036Z",
+      "atualizadoEm": "2026-07-16T01:11:39.471Z"
+    }
+  ],
+  "config": {
+    "categorias": [
+      "Agua",
+      "Luz",
+      "Gas",
+      "Internet",
+      "Telefone",
+      "Cartao de Credito",
+      "Aluguel",
+      "Condominio",
+      "Seguro",
+      "Saude",
+      "Educacao",
+      "Transporte",
+      "Alimentacao",
+      "Lazer",
+      "Outros"
+    ],
+    "statusOptions": [
+      "Pendente",
+      "Pago",
+      "Atrasado",
+      "Cancelado"
+    ]
+  }
+}
