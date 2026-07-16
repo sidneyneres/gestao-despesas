@@ -124,6 +124,30 @@ main {
 
 .btn-primary:hover { opacity: 0.9; }
 
+.btn-group {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.btn-export {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-export:hover {
+  background: #667eea;
+  color: white;
+}
+
 .btn-secondary {
   background: #e5e7eb;
   color: #333;
