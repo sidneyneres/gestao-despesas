@@ -253,6 +253,8 @@ $('#btnNovaDespesa').addEventListener('click', () => {
   abrirModal();
 });
 
+$('#btnExportarCSV').addEventListener('click', exportarCSV);
+
 $('#btnFecharModal').addEventListener('click', fecharModal);
 $('#btnCancelar').addEventListener('click', fecharModal);
 
@@ -278,6 +280,58 @@ let debounceTimer;
 function debounce(fn, delay = 300) {
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(fn, delay);
+}
+
+function escapeCSV(valor) {
+  const str = String(valor ?? '');
+  if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+    return '"' + str.replace(/"/g, '""') + '"';
+  }
+  return str;
+}
+
+async function exportarCSV() {
+  const params = new URLSearchParams();
+  const busca = $('#busca').value;
+  const cat = $('#filtroCategoria').value;
+  const status = $('#filtroStatus').value;
+  const mes = $('#filtroMes').value;
+  const ano = $('#filtroAno').value;
+
+  if (busca) params.set('busca', busca);
+  if (cat) params.set('categoria', cat);
+  if (status) params.set('status', status);
+  if (mes) params.set('mes', mes);
+  if (ano) params.set('ano', ano);
+
+  const data = await fetchJSON(`${API}?${params.toString()}`);
+
+  if (data.despesas.length === 0) {
+    alert('Nenhuma despesa para exportar.');
+    return;
+  }
+
+  const headers = ['Nome', 'Categoria', 'Valor', 'Data Vencimento', 'Data Pagamento', 'Status', 'Descricao'];
+  const rows = data.despesas.map(d => [
+    escapeCSV(d.nome),
+    escapeCSV(d.categoria),
+    d.valor.toFixed(2).replace('.', ','),
+    escapeCSV(d.dataVencimento),
+    escapeCSV(d.dataPagamento || ''),
+    escapeCSV(d.status),
+    escapeCSV(d.descricao || '')
+  ]);
+
+  const bom = '\uFEFF';
+  const csv = bom + headers.join(',') + '\n' + rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'despesas.csv';
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 $('#busca').addEventListener('input', () => debounce(carregarDespesas));
